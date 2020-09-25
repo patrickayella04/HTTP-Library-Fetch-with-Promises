@@ -41,4 +41,46 @@ class EasyHTTP{ // We dont even need a constructor because we dont need the XHR 
         });
     }
 
- }
+
+ 
+// Make an HTTP PUT Request
+put(url, data) { 
+    //We wrap this whole fetch in a Promises: call resolve when we want to send a response or reject to send an error.
+    return new Promise((resolve, reject) => {
+        fetch(url, {
+            method: 'PUT',
+            // we need content type in our headers
+            headers: {
+                'Content-type': 'application/json'
+            }, 
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            // we call resolve and pass in data below
+            .then(data => resolve(data))
+             // we call reject and pass in data below
+            .catch(err => reject(err));
+    });
+    }
+
+    // Make an HTTP DELETE Request
+    delete(url) { 
+        //We wrap this whole fetch in a Promises: call resolve when we want to send a response or reject to send an error.
+        return new Promise((resolve, reject) => {
+            fetch(url, {
+                method: 'DELETE',
+                // we need content type in our headers
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                // not sending data as it just be an empty obejct. So send back a string below. 
+                .then(() => resolve('Resource Deleted...'))
+                 // we call reject and pass in data below
+                .catch(err => reject(err));
+        });
+        }
+    
+
+}
